@@ -83,9 +83,20 @@ namespace RpgFighter
             //Ranged
             else if (weaponType == 2)
             {
-                if (Math.Sqrt(Math.Pow(distance, 2)) >= 5 && Math.Sqrt(Math.Pow(distance, 2)) <= attackRange * 0.5)
+                if (currentStance == 3)
                 {
-                    if (crit <= 10)
+                    if (crit <= 25)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else if (Math.Sqrt(Math.Pow(distance, 2)) >= 5 && Math.Sqrt(Math.Pow(distance, 2)) <= attackRange * 0.5)
+                {
+                    if (crit <= 15)
                     {
                         return true;
                     }
