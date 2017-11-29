@@ -1,0 +1,117 @@
+﻿RPG Fighter Documentation
+
+Phases
+	Start
+		During start phase, you can choose one of four things; Attack, Block, Channel, or Move
+
+	Mid
+		Mid phase is started after moving. You can choose one of 3 options; Attack, Block, or Channel
+		Attacking during mid phase will only do 70% damage.
+
+Blocking
+	You can choose to block on either Start or Mid phase. This will end your turn and reduce the damage taken from the next turn
+
+Channeling
+	You can choose to channel on either Start or Mid phase. This will end your turn and prep an attack for you next turn that will do bonus damage
+
+Moving
+	you can choose to move only on the Start phase. You then get the option to either advance towards the enemy or fallback, away from them. You will move a random amount of units between 3 and your Speed
+
+
+Melee
+	About
+		Melee weapon users are faster, tougher and stronger than the other 2 classes, but are out ranged.
+		Melee users only take 90% damage from attacks
+
+	Stratagy
+		Speed and resilience are your strong factors. The other classes will more than likely start landing hits on you sooner than you can on them, so use your defenceive abilities as you advance forward into attacking range.
+
+	Speed
+		Melee Weapons can start with 6 to 9 speed
+
+	Attack Range
+		Melee Weapons can start with 10 to 20 attack range
+
+	Damage
+		Melee Weapons can start with 20 to 30 damage
+		Melee does 135% damage when within 50% of the weapons attack range, otherwise does base damage
+
+	Crit Chance
+		Melee Weapons have a 5% chance to do critical damage of 200% base damage
+
+	Hit Chance
+		Melee Weapons have a 100% chance to hit when withing 30% of attack range, 85% chance to hit when between 30% and 80%, and 70% chance to hit when between 70% and 100%. All attacks outside of range will miss.
+
+	Channel
+		Melee Weapons will do 150% damage on a channeled attack.
+
+	Block
+		Melee Weapons will block 75% of damage dealt while blocking. It also has a 50% chance to deal 50% of the damage back at the attacker.
+
+
+
+Ranged
+	About
+		Ranged weapon users have extended range and an increased crit chance. But if anyone gets up close enough you will be unable to attack
+
+	Stratagy
+		Your main goal is to kite. Keep your enemies at a good distance where they can't get within your 5 unit threshold. You out range melee easily and magic slightly and have the easiest access to crits which stack on channeled damage, dealling 350% damage if you are lucky
+
+	Speed
+		Ranged Weapons can start with 4 to 7 speed.
+
+	Attack Range
+		Ranged Weapons can start with 25 to 35 attack range.
+
+	Damage
+		Ranged Weapons can start with 20 to 25 damage.
+		Ranged does base damage between 5 distance and 50% base range, and anywhere between (current distance)% and 100% for any other distance.
+
+	Crit Chance
+		Ranged Weapons have a 10% crit chance between 5 distance and the attack range that do 200% damaged.
+
+	Hit Chance
+		Ranged Weapons have a 75% chance to hit minus 2% for every unit of distance beyond the attack range
+		75 - 2 x (attackRange - distance)
+
+	Channel
+		Ranged Weapons will do 150% damage on a channeled attack and crit chance will be raised to 25% for the attack no matter what.
+
+	Block
+		Ranged Weapons will block 50% of damage dealt while blocking and heals 5 health. It also has a 50% chance to deal 50% of the damage back at the attacker.
+
+
+Magic
+	About
+		Magic users have increased abilities potency beyond whats capable of the other classes, but are physicly weaker than them.
+
+	Stratagy
+		Your strengths involve your abilities. Between your enhanced channel and block, you can dish out a lot of damage as long as you maintain high enough health to keep your attacks from missing.
+
+	Speed
+		Magic Weapons can start with 3 to 5 speed.
+
+	Attack Range
+		Magic Weapons can start with 20 to 25 attack range.
+
+	Damage
+		Ranged Weapons can start with 10 to 20 damage.
+		Magic does base damage as long as its within range.
+
+	Crit Chance
+		Magic Weapons cannot crit.
+
+	Hit Chance
+		Ranged Weapons have a 100% to hit while about 75 health, 80% while between 50 and 75 health, and 60% while below 50 health.
+		75 - 2 x (attackRange - distance)
+
+	Channel
+		Magic Weapons will do 225% damage on a channeled attack.
+
+	Block
+		Magic Weapons will block 50% of damage dealt while blocking and heals 10 health. It also has a 50% chance to deal 75% of the damage back at the attacker.
+		
+
+
+Scaling
+	Everytime you defeat an enemy you will gain 50 health, between 1 and 3 damage, 0 and 2 range, and 0 or 1 speed. Enemies weapons will gain one stat point to all three and start with 10 more health each time.

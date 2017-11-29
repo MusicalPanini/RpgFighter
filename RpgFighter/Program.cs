@@ -24,7 +24,7 @@ namespace RpgFighter
             double rng = 0;
             int spd = 0;
             int kills = -1;
-
+            Tuple<int, int, int> stats;
             //Creating Character
             Console.Write("What is your name: ");
             string name = Console.ReadLine();
@@ -41,27 +41,21 @@ namespace RpgFighter
                 {
                     //Melee
                     type = 1;
-                    dam = rand.Next(20, 31);
-                    rng = rand.Next(10, 21);
-                    spd = rand.Next(5, 9);
+                    stats = StatCreation(20, 31, 10, 21, 6, 9);
                     break;
                 }
                 else if (mnu == "2")
                 {
                     //Ranged
                     type = 2;
-                    dam = rand.Next(20, 21);
-                    rng = rand.Next(25, 36);
-                    spd = rand.Next(6, 9);
+                    stats = StatCreation(20, 21, 25, 36, 4, 7);
                     break;
                 }
                 else if (mnu == "3")
                 {
                     //Magic
                     type = 3;
-                    dam = rand.Next(10, 21);
-                    rng = rand.Next(20, 26);
-                    spd = rand.Next(2, 5);
+                    stats = StatCreation(10, 21, 20, 26, 3, 5);
                     break;
                 }
                 else { }
@@ -69,9 +63,9 @@ namespace RpgFighter
             Console.Clear();
             Console.Write("What is the name of your weapon: ");
             string wepname = Console.ReadLine();
-            Person player = new Person(dam, rng, spd, type, name, wepname);
+            Person player = new Person(stats.Item1, stats.Item2, stats.Item3, type, name, wepname);
             Console.Clear();
-            Person enemy = new Person(dam, rng, spd, type, name, wepname);
+            Person enemy = new Person(0, 0, 0, 1, "name", "weapon");
             //End Character Creation
 
             
@@ -92,33 +86,27 @@ namespace RpgFighter
                 {
                     //Melee
                     type = 1;
-                    dam = rand.Next(20, 31) + kills;
-                    rng = rand.Next(10, 21) + kills;
-                    spd = rand.Next(5, 9) + kills;
+                    stats = StatCreation(20, 31, 10, 21, 6, 9);
                     wepname = meleeNames[rand.Next(0, meleeNames.Length)];
                 }
                 else if (type == 2)
                 {
                     //Ranged
                     type = 2;
-                    dam = rand.Next(20, 21) + kills;
-                    rng = rand.Next(25, 36) + kills;
-                    spd = rand.Next(6, 9) + kills;
+                    stats = StatCreation(20, 26, 25, 36, 4, 7);
                     wepname = rangeNames[rand.Next(0, rangeNames.Length)];
                 }
                 else if (type == 3)
                 {
                     //Magic
                     type = 3;
-                    dam = rand.Next(10, 21) + kills;
-                    rng = rand.Next(20, 26) + kills;
-                    spd = rand.Next(2, 5) + kills;
+                    stats = StatCreation(10, 21, 20, 26, 3, 5);
                     wepname = magicNames[rand.Next(0, magicNames.Length)];
                 }
                 else { }
-                enemy.baseDamage = dam;
-                enemy.attackRange = rng;
-                enemy.speed = spd;
+                enemy.baseDamage = stats.Item1;
+                enemy.attackRange = stats.Item2;
+                enemy.speed = stats.Item3;
                 enemy.weaponType = type;
                 enemy.name = name;
                 enemy.weaponName = wepname;
@@ -167,7 +155,7 @@ namespace RpgFighter
                             Stats(player.speed, player.baseDamage, player.attackRange, player.health, player.name, wepType[player.weaponType]);
                             Stats(enemy.speed, enemy.baseDamage, enemy.attackRange, enemy.health, enemy.name, wepType[enemy.weaponType]);
                             Console.WriteLine("[Distance: " + distance + "] ~~~ [Kills: " + kills + "]");
-                            menu(turn, phases[currentphase]);
+                            Menu(turn, phases[currentphase]);
                             choice = Console.ReadLine();
 
                             if (choice == "1")
@@ -185,7 +173,7 @@ namespace RpgFighter
                             else if (choice == "2")
                             {
                                 Console.Clear();
-                                Block(player);
+                                player.health += Block(player);
                                 Console.ReadKey();
                                 currentphase = 2;
                             }
@@ -213,7 +201,7 @@ namespace RpgFighter
                             Stats(player.speed, player.baseDamage, player.attackRange, player.health, player.name, wepType[player.weaponType]);
                             Stats(enemy.speed, enemy.baseDamage, enemy.attackRange, enemy.health, enemy.name, wepType[enemy.weaponType]);
                             Console.WriteLine("[Distance: " + distance + "] ~~~ [Kills: " + kills + "]");
-                            menu(turn, phases[currentphase]);
+                            Menu(turn, phases[currentphase]);
                             choice = Console.ReadLine();
 
                             if (choice == "1")
@@ -231,7 +219,7 @@ namespace RpgFighter
                             else if (choice == "2")
                             {
                                 Console.Clear();
-                                Block(player);
+                                player.health += Block(player);
                                 Console.ReadKey();
                                 currentphase = 2;
                             }
@@ -284,7 +272,7 @@ namespace RpgFighter
                             if (enemy.weaponType == 2 && distance < 5)
                             {
                                 //Attempt to leave close range
-                                enemy.position += move(enemy, 1);
+                                enemy.position += Move(enemy, 1);
                                 distance = enemy.position - player.position;
                                 Console.ReadKey();
                                 currentphase = 1;
@@ -292,7 +280,7 @@ namespace RpgFighter
                             else if (enemy.attackRange < distance)
                             {
                                 //Attempt to get in range of player
-                                enemy.position += move(enemy, -1);
+                                enemy.position += Move(enemy, -1);
                                 distance = enemy.position - player.position;
                                 Console.ReadKey();
                                 currentphase = 1;
@@ -302,7 +290,7 @@ namespace RpgFighter
                                 if (enemy.health < player.health)
                                 {
                                     //Attempt to block channeled attack
-                                    Block(enemy);
+                                    enemy.health += Block(enemy);
                                     Console.ReadKey();
                                     currentphase = 2;
                                 }
@@ -320,7 +308,7 @@ namespace RpgFighter
                                     if (enemy.health < player.health * 0.6 && player.attackRange < distance)
                                     {
                                         //Attempt to back off of player becuase of much lower health than player
-                                        enemy.position += move(enemy, 1);
+                                        enemy.position += Move(enemy, 1);
                                         distance = enemy.position - player.position;
                                         Console.ReadKey();
                                         currentphase = 1;
@@ -330,7 +318,7 @@ namespace RpgFighter
                                         if (rand.Next(1, 4) == 1)
                                         {
                                             //RNG choose to back off of player becuase of slightly lower health than player
-                                            enemy.position += move(enemy, 1);
+                                            enemy.position += Move(enemy, 1);
                                             distance = enemy.position - player.position;
                                             Console.ReadKey();
                                             currentphase = 1;
@@ -363,7 +351,7 @@ namespace RpgFighter
                             else if (enemy.weaponType !=2 && player.weaponType == 2 && distance > 5)
                             {
                                 //Attempt to get within close range of Ranged player
-                                enemy.position += move(enemy, -1);
+                                enemy.position += Move(enemy, -1);
                                 distance = enemy.position - player.position;
                                 Console.ReadKey();
                                 currentphase = 1;
@@ -390,14 +378,14 @@ namespace RpgFighter
                                 }
                                 else
                                 {
-                                    Block(enemy);
+                                    enemy.health += Block(enemy);
                                     Console.ReadKey();
                                     currentphase = 2;
                                 }
                             }
                             else if (enemy.attackRange < distance)
                             {
-                                Block(enemy);
+                                enemy.health += Block(enemy);
                                 Console.ReadKey();
                                 currentphase = 2;
                             }
@@ -481,7 +469,13 @@ namespace RpgFighter
             Console.WriteLine("[Weapon Type: " + wep + "]");
         }
 
-        static int move(Person attacker, int direction)
+        static Tuple<int, int, int> StatCreation(int dam1, int dam2, int rng1, int rng2, int spd1, int spd2)
+        {
+            Random rand = new Random();
+            return Tuple.Create(rand.Next(dam1, dam2), rand.Next(rng1, rng2), rand.Next(spd1, spd2));
+        }
+
+        static int Move(Person attacker, int direction)
         {
             Random rand = new Random();
             int moved = direction * rand.Next(3, attacker.speed + 1);
@@ -489,11 +483,10 @@ namespace RpgFighter
             return moved;
         }
 
-        static void menu(int turn, string phase)
+        static void Menu(int turn, string phase)
         {
             Console.WriteLine("[Turn " + turn + "] [" + phase + "]");
             Console.WriteLine();
-
             Console.WriteLine("1) Attack");
             Console.WriteLine("2) Block");
             Console.WriteLine("3) Channel");
@@ -512,12 +505,12 @@ namespace RpgFighter
                 string dir = Console.ReadLine();
                 if (dir == "1")
                 {
-                    attacker.position += move(attacker, 1);
+                    attacker.position += Move(attacker, 1);
                     break;
                 }
                 if (dir == "2")
                 {
-                    attacker.position += move(attacker, -1);
+                    attacker.position += Move(attacker, -1);
                     break;
                 }
                 else { }
@@ -566,7 +559,7 @@ namespace RpgFighter
             {
                 if (attacker.weaponType == 3)
                 {
-                    ChD = 2;
+                    ChD = 2.25;
                 }
                 else
                 {
@@ -609,20 +602,23 @@ namespace RpgFighter
             return Convert.ToInt32(dam * CtD * ChD * DfD * MeD);
         }
 
-        static void Block(Person attacker)
+        static int Block(Person attacker)
         {
             attacker.currentStance = 2;
             if (attacker.weaponType == 3)
             {
-                Console.WriteLine(attacker.name + " summons a strong reflective sheild");
+                Console.WriteLine(attacker.name + " summons a strong reflective sheild and gains 10 health");
+                return 10;
             }
             else if (attacker.weaponType == 1)
             {
                 Console.WriteLine(attacker.name + " summons a resistant reflective sheild");
+                return 0;
             }
             else
             {
-                Console.WriteLine(attacker.name + " summons a weak reflective sheild");
+                Console.WriteLine(attacker.name + " summons a weak reflective sheild and gains 5 health");
+                return 5;
             }
             
         }
@@ -640,7 +636,7 @@ namespace RpgFighter
             }
             else
             {
-                Console.WriteLine(attacker.name + " takes a deep breath and aims for the head");
+                Console.WriteLine(attacker.name + " takes a deep breath and focuses");
             }
         }
 

@@ -28,7 +28,7 @@ namespace RpgFighter
             {
                 if (Math.Sqrt(Math.Pow(distance, 2)) < attackRange * 0.5)
                 {
-                    return Convert.ToInt32(baseDamage * 1.2);
+                    return Convert.ToInt32(baseDamage * 1.35);
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace RpgFighter
                 }
                 else
                 {
-                    return Convert.ToInt32(baseDamage * ((rand.Next(30, 101) * 0.01)));
+                    return Convert.ToInt32(baseDamage * ((rand.Next(Convert.ToInt32(Math.Sqrt(Math.Pow(distance, 2))), 101) * 0.01)));
                 }
             }
             //Magic
@@ -94,20 +94,9 @@ namespace RpgFighter
                         return false;
                     }
                 }
-                else if (Math.Sqrt(Math.Pow(distance, 2)) >= 5 && Math.Sqrt(Math.Pow(distance, 2)) <= attackRange * 0.5)
+                else if (Math.Sqrt(Math.Pow(distance, 2)) >= 5 && Math.Sqrt(Math.Pow(distance, 2)) <= attackRange)
                 {
-                    if (crit <= 15)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else if (Math.Sqrt(Math.Pow(distance, 2)) > 5 && Math.Sqrt(Math.Pow(distance, 2)) > attackRange * 0.75)
-                {
-                    if (crit <= 5)
+                    if (crit <= 10)
                     {
                         return true;
                     }
